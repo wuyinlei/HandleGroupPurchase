@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">HandleGroupPurchase</string>
+
+
+    <!--首页的tab文字-->
+    <string name="home_page">首页</string>
+    <string name="home_arround">周边</string>
+    <string name="home_mine">我的</string>
+    <string name="home_more">更多</string>
 </resources>
