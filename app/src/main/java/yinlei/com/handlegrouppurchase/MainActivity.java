@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     //标题
     private String[] tabIitles = new String[]{"首页","周边","我的","更多"
-    ,};
+    };
 
     FragmentTabHost mTabHost;
 
