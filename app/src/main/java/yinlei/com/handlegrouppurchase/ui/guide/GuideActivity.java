@@ -1,4 +1,4 @@
-package yinlei.com.handlegrouppurchase.ui;
+package yinlei.com.handlegrouppurchase.ui.guide;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import yinlei.com.handlegrouppurchase.MainActivity;
 import yinlei.com.handlegrouppurchase.R;
+import yinlei.com.handlegrouppurchase.ui.main.MainActivity;
 
 public class GuideActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 

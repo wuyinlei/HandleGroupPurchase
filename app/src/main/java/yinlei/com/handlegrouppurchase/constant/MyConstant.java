@@ -1,6 +1,11 @@
-package yinlei.com.handlegrouppurchase;
+package yinlei.com.handlegrouppurchase.constant;
 
 
+import yinlei.com.handlegrouppurchase.R;
+
+/**
+ * 首页更多菜单数据
+ */
 public class MyConstant {
 	public static final int RequestCityCode = 11;
 

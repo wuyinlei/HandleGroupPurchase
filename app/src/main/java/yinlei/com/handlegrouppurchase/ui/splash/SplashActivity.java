@@ -1,4 +1,4 @@
-package yinlei.com.handlegrouppurchase;
+package yinlei.com.handlegrouppurchase.ui.splash;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import yinlei.com.handlegrouppurchase.ui.GuideActivity;
+import yinlei.com.handlegrouppurchase.R;
+import yinlei.com.handlegrouppurchase.ui.guide.GuideActivity;
+import yinlei.com.handlegrouppurchase.ui.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

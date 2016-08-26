@@ -1,4 +1,4 @@
-package yinlei.com.handlegrouppurchase;
+package yinlei.com.handlegrouppurchase.ui.mine;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * 在此写用途
+ * 我的界面
  *
  * @version V1.0 <描述当前版本功能>
- * @FileName: yinlei.com.handlegrouppurchase.MineFragment.java
- * @author: myName
+ * @FileName: MineFragment.java
+ * @author: 若兰明月
  * @date: 2016-08-24 21:04
  */
 

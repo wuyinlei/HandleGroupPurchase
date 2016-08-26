@@ -1,4 +1,4 @@
-package yinlei.com.handlegrouppurchase;
+package yinlei.com.handlegrouppurchase.ui.mainfragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -33,13 +33,16 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import yinlei.com.handlegrouppurchase.constant.MyConstant;
+import yinlei.com.handlegrouppurchase.R;
+import yinlei.com.handlegrouppurchase.widget.WrapContentHeightViewPager;
 
 /**
- * 在此写用途
+ * 主界面
  *
  * @version V1.0 <描述当前版本功能>
- * @FileName: yinlei.com.handlegrouppurchase.MainFragment.java
- * @author: myName
+ * @FileName: MainFragment.java
+ * @author: 若兰明月
  * @date: 2016-08-24 21:03
  */
 

@@ -1,4 +1,4 @@
-package yinlei.com.handlegrouppurchase;
+package yinlei.com.handlegrouppurchase.ui.main;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -6,6 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import yinlei.com.handlegrouppurchase.R;
+import yinlei.com.handlegrouppurchase.ui.around.AroundFragment;
+import yinlei.com.handlegrouppurchase.ui.mainfragment.MainFragment;
+import yinlei.com.handlegrouppurchase.ui.mine.MineFragment;
+import yinlei.com.handlegrouppurchase.ui.more.MoreFragment;
 
 public class MainActivity extends AppCompatActivity {
 
