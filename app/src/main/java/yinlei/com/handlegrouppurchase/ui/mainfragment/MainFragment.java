@@ -1,5 +1,6 @@
 package yinlei.com.handlegrouppurchase.ui.mainfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,24 +27,27 @@ import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
 import com.yolanda.nohttp.rest.Response;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import yinlei.com.handlegrouppurchase.bean.HomeIconInfo;
+import yinlei.com.handlegrouppurchase.R;
 import yinlei.com.handlegrouppurchase.adapter.GoodsAdapter;
 import yinlei.com.handlegrouppurchase.adapter.MyGridAdapter;
 import yinlei.com.handlegrouppurchase.adapter.MyPagerAdapter;
-import yinlei.com.handlegrouppurchase.listener.MyPagerListner;
-import yinlei.com.handlegrouppurchase.R;
-import yinlei.com.handlegrouppurchase.adapter.ViewHolder;
-import yinlei.com.handlegrouppurchase.common.CommenAdapter;
+import yinlei.com.handlegrouppurchase.bean.HomeIconInfo;
+import yinlei.com.handlegrouppurchase.common.Global;
 import yinlei.com.handlegrouppurchase.constant.Constant;
 import yinlei.com.handlegrouppurchase.constant.MyConstant;
 import yinlei.com.handlegrouppurchase.http.CallServer;
 import yinlei.com.handlegrouppurchase.http.HttpListener;
+import yinlei.com.handlegrouppurchase.listener.MyPagerListner;
+import yinlei.com.handlegrouppurchase.ui.category.CategoryActivity;
+import yinlei.com.handlegrouppurchase.ui.location.LocationActivity;
+import yinlei.com.handlegrouppurchase.ui.search.SearchActivity;
+import yinlei.com.handlegrouppurchase.ui.tip.TipActivity;
 import yinlei.com.handlegrouppurchase.widget.MyListView;
 import yinlei.com.handlegrouppurchase.widget.ViewPagerIndicator;
 
@@ -58,14 +62,10 @@ import yinlei.com.handlegrouppurchase.widget.ViewPagerIndicator;
 
 public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeListener, BaseSliderView.OnSliderClickListener, HttpListener<String>, View.OnClickListener {
 
-    @Bind(R.id.slider)
     SliderLayout mSliderLayout;
 
-    @Bind(R.id.search_src_text)
     TextView search_src_text;
 
-//    @Bind(R.id.index_home_viewpager)
-//    WrapContentHeightViewPager viewPager;
 
     private List<String> mData = new ArrayList<>();
 
@@ -86,13 +86,10 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     private GridView gridView2;
     private GridView gridView3;
 
-    @Bind(R.id.home_top_city)
     TextView home_top_city;
 
-    @Bind(R.id.index_home_tip)
     ImageView index_home_tip;
 
-    @Bind(R.id.image_scan)
     ImageView image_scan;
 
     TextView tv_title_1;
@@ -119,34 +116,24 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
 
     LinearLayout ll_4;
 
-    @Bind(R.id.listView)
     MyListView mMyListView;
 
-    private MyAdapter mMyAdapter;
-//
-//    //接受处理消息
-//    private Handler handler = new Handler() {//暂时先让秒数动起来
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if (msg.what == 1) {
-//                initViewPager();//初始化 viewpager 解决切换不显示的问题
-//            }
-//        }
-//    };
 
     private View mInflate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //防止重新加载数据
-        if (mInflate == null) {
-            mInflate = inflater.inflate(R.layout.fragment_main, container, false);
-            ButterKnife.bind(this, mInflate);
-            initData();
-            initView();
-            initSlideLayout();
-        }
+        mInflate = inflater.inflate(R.layout.fragment_main, container, false);
+        mSliderLayout = (SliderLayout) mInflate.findViewById(R.id.slider);
+        home_top_city = (TextView) mInflate.findViewById(R.id.home_top_city);
+        index_home_tip = (ImageView) mInflate.findViewById(R.id.index_home_tip);
+        search_src_text = (TextView) mInflate.findViewById(R.id.search_src_text);
+        image_scan = (ImageView) mInflate.findViewById(R.id.image_scan);
+        mMyListView = (MyListView) mInflate.findViewById(R.id.listView);
+        initData();
+        initView();
+        initSlideLayout();
         return mInflate;
     }
 
@@ -155,10 +142,11 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
      * 初始化gridview
      */
     private void initView() {
+
         View headViewOne = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_one, null);
         initHeaderViewOne(headViewOne);
-        View headViewTwo = LayoutInflater.from(getActivity()).inflate(R.layout.home_headviewall, null);
 
+        View headViewTwo = LayoutInflater.from(getActivity()).inflate(R.layout.home_headviewall, null);
         mIndicator = (ViewPagerIndicator) headViewTwo.findViewById(R.id.indicator);
         ViewPager viewPager = (ViewPager) headViewTwo.findViewById(R.id.viewPager);
         viewPager.setOnPageChangeListener(new MyPagerListner(mIndicator));
@@ -170,6 +158,11 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         gridView01.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HomeIconInfo homeIconInfo = mPagerOneData.get(i);
+                String cateName = homeIconInfo.getIconName();
+                Intent intent = new Intent(getActivity(), CategoryActivity.class);
+                intent.putExtra(Global.CATEGORY_NAME, cateName);
+                startActivity(intent);
                 Toast.makeText(getActivity(), "我是第gridView01" + i + 1 + "页的第" + i + 1 + "项", Toast.LENGTH_SHORT).show();
             }
         });
@@ -180,6 +173,11 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         gridView02.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HomeIconInfo homeIconInfo = mPagerTwoData.get(i);
+                String cateName = homeIconInfo.getIconName();
+                Intent intent = new Intent(getActivity(), CategoryActivity.class);
+                intent.putExtra(Global.CATEGORY_NAME, cateName);
+                startActivity(intent);
                 Toast.makeText(getActivity(), "我是第gridView02" + i + 1 + "页的第" + i + 1 + "项", Toast.LENGTH_SHORT).show();
             }
         });
@@ -190,6 +188,11 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         gridView03.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HomeIconInfo homeIconInfo = mPagerThreeData.get(i);
+                String cateName = homeIconInfo.getIconName();
+                Intent intent = new Intent(getActivity(), CategoryActivity.class);
+                intent.putExtra(Global.CATEGORY_NAME, cateName);
+                startActivity(intent);
                 Toast.makeText(getActivity(), "我是gridView03" + "页的第" + i + 1 + "项", Toast.LENGTH_SHORT).show();
             }
         });
@@ -205,7 +208,7 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         mMyListView.addHeaderView(headViewOne);
         //  mMyAdapter = new MyAdapter(mDatalist);
 
-       // mMyListView.setAdapter(mMyAdapter);
+        // mMyListView.setAdapter(mMyAdapter);
     }
 
     private void initHeaderViewOne(View headViewOne) {
@@ -227,28 +230,28 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.home_top_city:
+            case R.id.home_top_city:  //定位
+                startActivity(new Intent(getActivity(), LocationActivity.class));
+                break;
+            case R.id.search_src_text:  //搜索
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+                break;
+            case R.id.index_home_tip:  //信箱
+                startActivity(new Intent(getActivity(), TipActivity.class));
+                break;
+            case R.id.image_scan:  //扫描
 
                 break;
-            case R.id.search_src_text:
-
-                break;
-            case R.id.index_home_tip:
-
-                break;
-            case R.id.image_scan:
-
-                break;
-            case R.id.ll_1:
+            case R.id.ll_1: //折扣
                 Toast.makeText(getActivity(), "点击我了", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.ll_2:
+            case R.id.ll_2:  //闪慧
 
                 break;
-            case R.id.ll_3:
+            case R.id.ll_3:  //半价
 
                 break;
-            case R.id.ll_4:
+            case R.id.ll_4:  //自助
 
                 break;
             default:
@@ -257,44 +260,6 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
 
         }
     }
-
-    class MyAdapter extends CommenAdapter {
-
-        public MyAdapter(List data) {
-            super(data);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup viewGroup) {
-//            ViewHolder holder = null;
-            //第二步,判断条件的封装
-//            if (convertView == null){
-//                holder = new ViewHolder(getActivity(),R.layout.goods_list_item,viewGroup);
-//                //第一步:
-////                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.goods_list_item, null);
-////                convertView.setTag(holder);
-//            }else {
-//                holder = (ViewHolder) convertView.getTag();
-//            }
-
-            ViewHolder holder = ViewHolder.get(getActivity(), R.layout.goods_list_item, convertView, viewGroup);
-
-            //第三步
-            //商品子视图
-//            holder.tvTitle = (TextView) convertView.findViewById(R.id.title);
-//            holder.tvTitle.setText(mDatalist.get(position).getProduct());
-            TextView tv = holder.getView(R.id.title);
-            //  tv.setText(mDatalist.get(position).getProduct());
-            //Uri uri = Uri.parse(mDatalist.get(position).getImages().get(0).getImage());
-            //SimpleDraweeView draweeView = holder.getView(R.id.iv_icon2);
-            //draweeView.setImageURI(uri);
-            return holder.getConvertView();
-        }
-    }
-
-//    static class ViewHolder{
-//        TextView tvTitle;
-//    }
 
 
     /**
@@ -326,7 +291,15 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         switch (what) {
             case 0:
                 Gson gson = new Gson();
-                GoodsBean goodsBean = gson.fromJson(response.get(), GoodsBean.class);
+                String data = response.get();
+                Log.d("MainFragment", data.toString());
+                byte[] bytes = data.getBytes();
+                GoodsBean goodsBean = null;
+                try {
+                    goodsBean = gson.fromJson(new String(bytes, "utf-8"), GoodsBean.class);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 mGoodlistBeen = goodsBean.getResult().getGoodlist();
                 mGoodsAdapter = new GoodsAdapter(getActivity(), mGoodlistBeen);
                 //mGoodsAdapter.setGoodsBeen(mGoodlistBeen);
@@ -377,73 +350,6 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         mSliderLayout.setDuration(4000);
         mSliderLayout.addOnPageChangeListener(this);
     }
-
-//
-//    /**
-//     * 初始化gridview
-//     */
-//    private void initGridView() {
-//        gridView1 = (GridView) LayoutInflater.from(getActivity()).inflate(R.layout.index_home_gridview, null);
-//        gridView1.setAdapter(new GridViewAdapter(getActivity(), 0));
-//        gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(getActivity(), "点击我了" + i, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        gridView2 = (GridView) LayoutInflater.from(getActivity()).inflate(R.layout.index_home_gridview, null);
-//        gridView2.setAdapter(new GridViewAdapter(getActivity(), 1));
-//        gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(getActivity(), "点击我了" + i, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        gridView3 = (GridView) LayoutInflater.from(getActivity()).inflate(R.layout.index_home_gridview, null);
-//        gridView3.setAdapter(new GridViewAdapter(getActivity(), 2));
-//        gridView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(getActivity(), "点击我了" + i, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-
-//
-//    private void initViewPager() {   //初始化viewpager
-//        List<View> list = new ArrayList<View>();  //以下实现动态添加三组gridview
-//        list.add(gridView1);
-//        list.add(gridView2);
-//        list.add(gridView3);
-//        viewPager.setAdapter(new MyViewPagerAdapter(list));
-//        //viewPager .setOffscreenPageLimit(2);   //meiyong
-//        rb1.setChecked(true);//设置默认  下面的点选中的是第一个
-//        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageSelected(int position) {  //实现划到那个页面，那个页面下面的点会被选中
-//                // TODO Auto-generated method stub
-//                if (position == 0) {
-//                    rb1.setChecked(true);
-//                } else if (position == 1) {
-//                    rb2.setChecked(true);
-//                } else if (position == 2) {
-//                    rb3.setChecked(true);
-//                }
-//            }
-//
-//            @Override
-//            public void onPageScrolled(int arg0, float arg1, int arg2) {
-//                // TODO Auto-generated method stub
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int arg0) {
-//                // TODO Auto-generated method stub
-//            }
-//        });
-//
-//    }
 
     @Override
     public void onStop() {

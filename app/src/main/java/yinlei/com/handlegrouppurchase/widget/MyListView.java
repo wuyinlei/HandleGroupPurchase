@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.ListView;
 
 /**
- * 在此写用途
+ * 重写onMeasure方法，是的ListView和ScrollView一起的时候显示完全
  *
  * @version V1.0 <描述当前版本功能>
  * @FileName: MyListView.java

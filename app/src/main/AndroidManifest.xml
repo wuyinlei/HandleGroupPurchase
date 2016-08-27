@@ -3,10 +3,10 @@
           package="yinlei.com.handlegrouppurchase">
 
     <!-- if you want to load images from the internet -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <!-- if you want to load images from a file OR from the internet -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".common.MyApplication"
@@ -22,9 +22,25 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.MainActivity">
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".ui.guide.GuideActivity">
+        <activity
+            android:name=".ui.guide.GuideActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".ui.search.SearchActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".ui.tip.TipActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".ui.location.LocationActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".ui.category.CategoryActivity"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 
