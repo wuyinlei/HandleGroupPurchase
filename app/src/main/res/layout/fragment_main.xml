@@ -1,9 +1,9 @@
-<yinlei.com.handlegrouppurchase.widget.VerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                          xmlns:custom="http://schemas.android.com/apk/res-auto"
-                                                          xmlns:tools="http://schemas.android.com/tools"
-                                                          android:layout_width="match_parent"
-                                                          android:layout_height="match_parent"
-                                                          tools:context=".ui.mainfragment.MainFragment">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.mainfragment.MainFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="选择"
+                android:text="北京"
                 android:textColor="@color/white"/>
 
             <TextView
@@ -59,10 +59,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:clickable="true"
-                    android:src="@drawable/home_navibar_icon_add"/>
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:src="@drawable/nav_icon_message_nor"/>
             </FrameLayout>
 
             <ImageView
@@ -71,9 +73,9 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:src="@drawable/home_navibar_tips_icon_scan"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/nav_icon_scan_nor"
                 android:text="扫一扫"/>
         </LinearLayout>
 
@@ -87,9 +89,6 @@
             custom:pager_animation="Accordion"
             custom:pager_animation_span="1100"/>
 
-        <include layout="@layout/index_home_list1"/>
-
-        <include layout="@layout/index_home_list4"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -98,12 +97,9 @@
             android:text="猜你喜欢"
             android:textSize="15sp"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <yinlei.com.handlegrouppurchase.widget.MyListView
+            android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"/>
     </LinearLayout>
-
-</yinlei.com.handlegrouppurchase.widget.VerticalScrollView>
+</ScrollView>

@@ -17,14 +17,14 @@ public class VerticalScrollView extends ScrollView {
 
 	public VerticalScrollView(Context context, AttributeSet attrs) {  
 		super(context, attrs);  
-		mGestureDetector = new GestureDetector(context, new YScrollDetector());  
+		//mGestureDetector = new GestureDetector(context, new YScrollDetector());
 	}  
 
-	@Override  
-	public boolean onInterceptTouchEvent(MotionEvent ev) {  
-		return super.onInterceptTouchEvent(ev)  
-				&& mGestureDetector.onTouchEvent(ev);  
-	}  
+//	@Override
+//	public boolean onInterceptTouchEvent(MotionEvent ev) {
+//		return super.onInterceptTouchEvent(ev)
+//				&& mGestureDetector.onTouchEvent(ev);
+//	}
 
 	class YScrollDetector extends SimpleOnGestureListener {  
 

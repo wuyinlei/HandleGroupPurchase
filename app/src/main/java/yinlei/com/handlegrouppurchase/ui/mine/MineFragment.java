@@ -7,6 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
+import butterknife.ButterKnife;
+import yinlei.com.handlegrouppurchase.R;
+import yinlei.com.handlegrouppurchase.adapter.GoodsAdapter;
+import yinlei.com.handlegrouppurchase.ui.mainfragment.GoodsBean;
+
 /**
  * 我的界面
  *
@@ -16,11 +23,25 @@ import android.view.ViewGroup;
  * @date: 2016-08-24 21:04
  */
 
-public class MineFragment extends Fragment {
+public class MineFragment extends Fragment  {
+
+
+    private List<GoodsBean.ResultBean.GoodlistBean> mGoodlistBeen;
+    private GoodsAdapter mGoodsAdapter;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_mine, container,false);
+        return view;
     }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
 }
