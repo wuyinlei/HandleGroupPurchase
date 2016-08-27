@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -186,10 +187,28 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     private void initGridView() {
         gridView1 = (GridView) LayoutInflater.from(getActivity()).inflate(R.layout.index_home_gridview, null);
         gridView1.setAdapter(new GridViewAdapter(getActivity(), 0));
+        gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), "点击我了" + i, Toast.LENGTH_SHORT).show();
+            }
+        });
         gridView2 = (GridView) LayoutInflater.from(getActivity()).inflate(R.layout.index_home_gridview, null);
         gridView2.setAdapter(new GridViewAdapter(getActivity(), 1));
+        gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), "点击我了" + i, Toast.LENGTH_SHORT).show();
+            }
+        });
         gridView3 = (GridView) LayoutInflater.from(getActivity()).inflate(R.layout.index_home_gridview, null);
         gridView3.setAdapter(new GridViewAdapter(getActivity(), 2));
+        gridView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), "点击我了" + i, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -200,6 +219,11 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         private LayoutInflater inflater;
         private int page;
 
+        /**
+         * 根据传入的page来判断是要显示的第几页的数据
+         * @param context  上下文
+         * @param page  第几页
+         */
         public GridViewAdapter(Context context, int page) {
             super();
             this.inflater = LayoutInflater.from(context);
@@ -246,22 +270,23 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
             vh.iv_navsort.setImageResource(MyConstant.navSortImages[position + 8 * page]);
             vh.tv_navsort.setText(MyConstant.navSort[position + 8 * page]);
             if (position == 8 - 1 && page == 2) {
-                vh.iv_navsort.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View arg0) {
-                        // TODO Auto-generated method stub
-                    }
-                });
+//                vh.iv_navsort.setOnClickListener(new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View arg0) {
+//                        // TODO Auto-generated method stub
+//                    }
+//                });
             } else {
-                vh.iv_navsort.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View arg0) {
-                    }
-                });
+                //vh.iv_navsort.setOnClickListener(new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View arg0) {
+//                    }
+//                });
+//
+                //   }
             }
-
 
             return convertView;
         }
