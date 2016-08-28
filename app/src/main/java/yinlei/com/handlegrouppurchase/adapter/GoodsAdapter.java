@@ -1,6 +1,7 @@
 package yinlei.com.handlegrouppurchase.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,8 +72,10 @@ public class GoodsAdapter extends BaseAdapter {
         }
 
         GoodsBean.ResultBean.GoodlistBean goodlistBean = mGoodlistBeen.get(i);
+        Log.d("GoodsAdapter", goodlistBean.toString());
+
         Picasso.with(mContext).load(goodlistBean.getImages().get(1).getImage()).into(holder.mPhoto);
-        holder.mTitle.setText(goodlistBean.getTitle());
+        holder.mTitle.setText(goodlistBean.getProduct());
         holder.mTvContent.setText(goodlistBean.getShort_title());
         holder.mPrice.setText(goodlistBean.getPrice());
         holder.mValue.setText(goodlistBean.getValue());

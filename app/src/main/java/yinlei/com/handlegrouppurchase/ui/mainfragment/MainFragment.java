@@ -2,6 +2,8 @@ package yinlei.com.handlegrouppurchase.ui.mainfragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -22,12 +24,9 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.gson.Gson;
-import com.yolanda.nohttp.NoHttp;
-import com.yolanda.nohttp.RequestMethod;
-import com.yolanda.nohttp.rest.Request;
+import com.google.gson.reflect.TypeToken;
 import com.yolanda.nohttp.rest.Response;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,15 +38,14 @@ import yinlei.com.handlegrouppurchase.adapter.MyGridAdapter;
 import yinlei.com.handlegrouppurchase.adapter.MyPagerAdapter;
 import yinlei.com.handlegrouppurchase.bean.HomeIconInfo;
 import yinlei.com.handlegrouppurchase.common.Global;
-import yinlei.com.handlegrouppurchase.constant.Constant;
 import yinlei.com.handlegrouppurchase.constant.MyConstant;
-import yinlei.com.handlegrouppurchase.http.CallServer;
 import yinlei.com.handlegrouppurchase.http.HttpListener;
 import yinlei.com.handlegrouppurchase.listener.MyPagerListner;
 import yinlei.com.handlegrouppurchase.ui.category.CategoryActivity;
 import yinlei.com.handlegrouppurchase.ui.location.LocationActivity;
 import yinlei.com.handlegrouppurchase.ui.search.SearchActivity;
 import yinlei.com.handlegrouppurchase.ui.tip.TipActivity;
+import yinlei.com.handlegrouppurchase.utils.Utils;
 import yinlei.com.handlegrouppurchase.widget.MyListView;
 import yinlei.com.handlegrouppurchase.widget.ViewPagerIndicator;
 
@@ -125,16 +123,21 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //防止重新加载数据
         mInflate = inflater.inflate(R.layout.fragment_main, container, false);
-        mSliderLayout = (SliderLayout) mInflate.findViewById(R.id.slider);
-        home_top_city = (TextView) mInflate.findViewById(R.id.home_top_city);
-        index_home_tip = (ImageView) mInflate.findViewById(R.id.index_home_tip);
-        search_src_text = (TextView) mInflate.findViewById(R.id.search_src_text);
-        image_scan = (ImageView) mInflate.findViewById(R.id.image_scan);
-        mMyListView = (MyListView) mInflate.findViewById(R.id.listView);
+
         initData();
+        new MyThread().start();
         initView();
+        initListener();
         initSlideLayout();
         return mInflate;
+    }
+
+    private void initListener() {
+        home_top_city.setOnClickListener(this);
+        index_home_tip.setOnClickListener(this);
+        search_src_text.setOnClickListener(this);
+        image_scan.setOnClickListener(this);
+
     }
 
 
@@ -142,6 +145,13 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
      * 初始化gridview
      */
     private void initView() {
+
+        mSliderLayout = (SliderLayout) mInflate.findViewById(R.id.slider);
+        home_top_city = (TextView) mInflate.findViewById(R.id.home_top_city);
+        index_home_tip = (ImageView) mInflate.findViewById(R.id.index_home_tip);
+        search_src_text = (TextView) mInflate.findViewById(R.id.search_src_text);
+        image_scan = (ImageView) mInflate.findViewById(R.id.image_scan);
+        mMyListView = (MyListView) mInflate.findViewById(R.id.listView);
 
         View headViewOne = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_one, null);
         initHeaderViewOne(headViewOne);
@@ -231,13 +241,13 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_top_city:  //定位
-                startActivity(new Intent(getActivity(), LocationActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), LocationActivity.class));
                 break;
             case R.id.search_src_text:  //搜索
-                startActivity(new Intent(getActivity(), SearchActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
             case R.id.index_home_tip:  //信箱
-                startActivity(new Intent(getActivity(), TipActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), TipActivity.class));
                 break;
             case R.id.image_scan:  //扫描
 
@@ -281,30 +291,57 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
             }
         }
 
-        Request<String> request = NoHttp.createStringRequest(Constant.spRecommendURL, RequestMethod.GET);
-        CallServer.getInstance().add(getActivity()
-                , 0, request, this, true, true);
+
+       // String result = Utils.getJson(getActivity(), "GoodsInfo.json");
+
+        //Request<String> request = NoHttp.createStringRequest(Constant.spRecommendURL, RequestMethod.GET);
+        //CallServer.getInstance().add(getActivity()
+        //      , 0, request, this, true, true);
+    }
+
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mGoodlistBeen = (List<GoodsBean.ResultBean.GoodlistBean>) msg.obj;
+            mGoodsAdapter = new GoodsAdapter(getActivity(), mGoodlistBeen);
+            mMyListView.setAdapter(mGoodsAdapter);
+        }
+    };
+
+
+    /**
+     * 解析本地json文件
+     */
+    class MyThread extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            String result = Utils.getJson(getActivity(), "GoodsInfo.json");
+            Gson gson = new Gson();
+            GoodsBean goodsBean = null;
+            goodsBean = gson.fromJson(result, new TypeToken<GoodsBean>() {
+            }.getType());
+            mGoodlistBeen = goodsBean.getResult().getGoodlist();
+            Message message = Message.obtain();
+            message.obj = mGoodlistBeen;
+            mHandler.sendMessage(message);
+        }
     }
 
     @Override
     public void onSucceed(int what, Response<String> response) {
-        switch (what) {
-            case 0:
-                Gson gson = new Gson();
-                String data = response.get();
-                Log.d("MainFragment", data.toString());
-                byte[] bytes = data.getBytes();
-                GoodsBean goodsBean = null;
-                try {
-                    goodsBean = gson.fromJson(new String(bytes, "utf-8"), GoodsBean.class);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                mGoodlistBeen = goodsBean.getResult().getGoodlist();
-                mGoodsAdapter = new GoodsAdapter(getActivity(), mGoodlistBeen);
-                //mGoodsAdapter.setGoodsBeen(mGoodlistBeen);
-                mMyListView.setAdapter(mGoodsAdapter);
-        }
+//        switch (what) {
+//            case 0:
+//                Gson gson = new Gson();
+//                String data = response.get();
+//                GoodsBean goodsBean = null;
+//                goodsBean = gson.fromJson(data, new TypeToken<GoodsBean>() {
+//                }.getType());
+//                mGoodlistBeen = goodsBean.getResult().getGoodlist();
+//                mGoodsAdapter = new GoodsAdapter(getActivity(), mGoodlistBeen);
+//                mMyListView.setAdapter(mGoodsAdapter);
+//        }
     }
 
     @Override

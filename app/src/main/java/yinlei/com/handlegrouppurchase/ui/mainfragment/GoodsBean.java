@@ -335,6 +335,38 @@ public class GoodsBean {
                 this.images = images;
             }
 
+            @Override
+            public String toString() {
+                return "GoodlistBean{" +
+                        "goods_id='" + goods_id + '\'' +
+                        ", product='" + product + '\'' +
+                        ", title='" + title + '\'' +
+                        ", short_title='" + short_title + '\'' +
+                        ", value='" + value + '\'' +
+                        ", price='" + price + '\'' +
+                        ", bought=" + bought +
+                        ", is_new='" + is_new + '\'' +
+                        ", is_appointment=" + is_appointment +
+                        ", seven_refund='" + seven_refund + '\'' +
+                        ", time_refund=" + time_refund +
+                        ", goods_type='" + goods_type + '\'' +
+                        ", is_sell_up='" + is_sell_up + '\'' +
+                        ", new_cat='" + new_cat + '\'' +
+                        ", is_voucher='" + is_voucher + '\'' +
+                        ", left_time=" + left_time +
+                        ", distance='" + distance + '\'' +
+                        ", l_display=" + l_display +
+                        ", l_text='" + l_text + '\'' +
+                        ", l_price='" + l_price + '\'' +
+                        ", l_content='" + l_content + '\'' +
+                        ", lat='" + lat + '\'' +
+                        ", lng='" + lng + '\'' +
+                        ", is_buyed='" + is_buyed + '\'' +
+                        ", is_collected='" + is_collected + '\'' +
+                        ", images=" + images +
+                        '}';
+            }
+
             public static class ImagesBean {
                 private int width;
                 private String image;
