@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">HandleGroupPurchase</string>
-
+    <string name="app_name">美团</string>
 
     <!--首页的tab文字-->
     <string name="home_page">首页</string>

@@ -1,9 +1,9 @@
 package yinlei.com.handlegrouppurchase.ui.tip;
 
 import yinlei.com.handlegrouppurchase.R;
-import yinlei.com.handlegrouppurchase.ui.base.BaseActivity;
+import yinlei.com.handlegrouppurchase.widget.swipebackfragment.SwipeBackActivity;
 
-public class TipActivity extends BaseActivity {
+public class TipActivity extends SwipeBackActivity {
 
     @Override
     protected int getLayout() {

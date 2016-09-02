@@ -80,9 +80,9 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     private List<GoodsBean.ResultBean.GoodlistBean> mGoodlistBeen;
     private GoodsAdapter mGoodsAdapter;
 
-    private GridView gridView1;
-    private GridView gridView2;
-    private GridView gridView3;
+//    private GridView gridView1;
+//    private GridView gridView2;
+//    private GridView gridView3;
 
     TextView home_top_city;
 
@@ -118,18 +118,37 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
 
 
     private View mInflate;
+    private MyPagerAdapter mMyPagerAdapter = new MyPagerAdapter(mViews);
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //防止重新加载数据
-        mInflate = inflater.inflate(R.layout.fragment_main, container, false);
+        //防止重新加载数据   //这一步也是解决了在切换fragment的时候，因为里面有了pagerAdapter
+        //如果没有重新加载数据，那么就会在次添加mViews，这个时候由于count和当前的mViews个数不一样(mViews的数量又多一倍)
+        //这个时候就会报异常，所以用这个不重新加载，就可以防止重新加载PagerAdapter
+        if (mInflate == null) {
 
-        initData();
-        new MyThread().start();
-        initView();
-        initListener();
-        initSlideLayout();
+            mInflate = inflater.inflate(R.layout.fragment_main, container, false);
+
+            mMyPagerAdapter.notifyDataSetChanged();
+            initData();
+            new MyThread().start();
+            init();
+            initView();
+            initSlideLayout();
+            initListener();
+        }
+
         return mInflate;
+    }
+
+    private void init() {
+        mSliderLayout = (SliderLayout) mInflate.findViewById(R.id.slider);
+        home_top_city = (TextView) mInflate.findViewById(R.id.home_top_city);
+        index_home_tip = (ImageView) mInflate.findViewById(R.id.index_home_tip);
+        search_src_text = (TextView) mInflate.findViewById(R.id.search_src_text);
+        image_scan = (ImageView) mInflate.findViewById(R.id.image_scan);
+        mMyListView = (MyListView) mInflate.findViewById(R.id.listView);
+
     }
 
     private void initListener() {
@@ -137,7 +156,6 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         index_home_tip.setOnClickListener(this);
         search_src_text.setOnClickListener(this);
         image_scan.setOnClickListener(this);
-
     }
 
 
@@ -145,13 +163,6 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
      * 初始化gridview
      */
     private void initView() {
-
-        mSliderLayout = (SliderLayout) mInflate.findViewById(R.id.slider);
-        home_top_city = (TextView) mInflate.findViewById(R.id.home_top_city);
-        index_home_tip = (ImageView) mInflate.findViewById(R.id.index_home_tip);
-        search_src_text = (TextView) mInflate.findViewById(R.id.search_src_text);
-        image_scan = (ImageView) mInflate.findViewById(R.id.image_scan);
-        mMyListView = (MyListView) mInflate.findViewById(R.id.listView);
 
         View headViewOne = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_one, null);
         initHeaderViewOne(headViewOne);
@@ -172,7 +183,7 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
                 String cateName = homeIconInfo.getIconName();
                 Intent intent = new Intent(getActivity(), CategoryActivity.class);
                 intent.putExtra(Global.CATEGORY_NAME, cateName);
-                startActivity(intent);
+                getActivity().startActivity(intent);
                 Toast.makeText(getActivity(), "我是第gridView01" + i + 1 + "页的第" + i + 1 + "项", Toast.LENGTH_SHORT).show();
             }
         });
@@ -212,7 +223,11 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         mViews.add(pagerOne);
         mViews.add(pagerTwo);
         mViews.add(pagerThree);
+
         viewPager.setAdapter(new MyPagerAdapter(mViews));
+
+        //  mMyPagerAdapter.notifyDataSetChanged();
+
         //添加listview的头部
         mMyListView.addHeaderView(headViewTwo);
         mMyListView.addHeaderView(headViewOne);
@@ -292,19 +307,20 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         }
 
 
-       // String result = Utils.getJson(getActivity(), "GoodsInfo.json");
+        // String result = Utils.getJson(getActivity(), "GoodsInfo.json");
 
         //Request<String> request = NoHttp.createStringRequest(Constant.spRecommendURL, RequestMethod.GET);
         //CallServer.getInstance().add(getActivity()
         //      , 0, request, this, true, true);
     }
 
-    Handler mHandler = new Handler(){
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             mGoodlistBeen = (List<GoodsBean.ResultBean.GoodlistBean>) msg.obj;
             mGoodsAdapter = new GoodsAdapter(getActivity(), mGoodlistBeen);
+            // mGoodsAdapter.notify();
             mMyListView.setAdapter(mGoodsAdapter);
         }
     };
@@ -391,6 +407,8 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     @Override
     public void onStop() {
         mSliderLayout.stopAutoCycle();
+        // mMyPagerAdapter.notifyDataSetChanged();
+        // mViews.clear();
         super.onStop();
     }
 
@@ -418,5 +436,6 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+
     }
 }

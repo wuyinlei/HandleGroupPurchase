@@ -7,11 +7,11 @@ import android.widget.Toast;
 
 import yinlei.com.handlegrouppurchase.R;
 import yinlei.com.handlegrouppurchase.common.Global;
-import yinlei.com.handlegrouppurchase.ui.base.BaseActivity;
 import yinlei.com.handlegrouppurchase.ui.category.food.FoodFragment;
 import yinlei.com.handlegrouppurchase.ui.category.movie.MovieFragment;
+import yinlei.com.handlegrouppurchase.widget.swipebackfragment.SwipeBackActivity;
 
-public class CategoryActivity extends BaseActivity {
+public class CategoryActivity extends SwipeBackActivity {
 
     private FrameLayout container;
     String categoryName;
@@ -39,10 +39,12 @@ public class CategoryActivity extends BaseActivity {
         if (categoryName != null && !TextUtils.isEmpty(categoryName)) {
             switch (categoryName) {
                 case "美食":
-                    mFragmentManager.beginTransaction().replace(R.id.container, new FoodFragment()).commit();
+                    mFragmentManager.beginTransaction().setCustomAnimations(R.anim.h_fragment_enter, R.anim.h_fragment_exit, R.anim.h_fragment_pop_enter, R.anim.h_fragment_pop_exit)
+                            .replace(R.id.container, new FoodFragment()).commit();
                     break;
                 case "电影":
-                    mFragmentManager.beginTransaction().replace(R.id.container, new MovieFragment()).commit();
+                    mFragmentManager.beginTransaction().setCustomAnimations(R.anim.h_fragment_enter, R.anim.h_fragment_exit, R.anim.h_fragment_pop_enter, R.anim.h_fragment_pop_exit)
+                            .replace(R.id.container, new MovieFragment()).commit();
                     break;
                 case "休闲娱乐":
 
@@ -114,7 +116,7 @@ public class CategoryActivity extends BaseActivity {
 
             }
         } else {
-            Toast.makeText(mContext, "传值出错", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "传值出错", Toast.LENGTH_SHORT).show();
         }
     }
 

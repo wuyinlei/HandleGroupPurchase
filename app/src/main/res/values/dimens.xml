@@ -7,6 +7,9 @@
     <dimen name="text_size_default">18sp</dimen>
     <dimen name="text_size_index_home_title">16sp</dimen>
 
+
+    <integer name="duration_anim">300</integer>
+
     <!-- 间距 -->
     <dimen name="normal_space">10dp</dimen>
     <dimen name="little_sapce">5dp</dimen>

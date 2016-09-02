@@ -1,9 +1,9 @@
 package yinlei.com.handlegrouppurchase.ui.location;
 
 import yinlei.com.handlegrouppurchase.R;
-import yinlei.com.handlegrouppurchase.ui.base.BaseActivity;
+import yinlei.com.handlegrouppurchase.widget.swipebackfragment.SwipeBackActivity;
 
-public class LocationActivity extends BaseActivity {
+public class LocationActivity extends SwipeBackActivity {
 
     @Override
     protected int getLayout() {

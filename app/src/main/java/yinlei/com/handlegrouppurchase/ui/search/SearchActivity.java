@@ -1,9 +1,9 @@
 package yinlei.com.handlegrouppurchase.ui.search;
 
 import yinlei.com.handlegrouppurchase.R;
-import yinlei.com.handlegrouppurchase.ui.base.BaseActivity;
+import yinlei.com.handlegrouppurchase.widget.swipebackfragment.SwipeBackActivity;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends SwipeBackActivity {
 
 
     @Override

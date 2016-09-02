@@ -1,6 +1,7 @@
 package yinlei.com.handlegrouppurchase.ui.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import yinlei.com.handlegrouppurchase.R;
 
 /**
  * 在此写用途
@@ -67,6 +70,26 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public void showToast(int resourse) {
         Toast.makeText(this, resourse, Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.anim_in_left_right, R.anim.anit_out_left_right);
+    }
+
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.anmi_in_right_left, R.anim.anmi_out_right_left);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        overridePendingTransition(R.anim.anmi_in_right_left, R.anim.anmi_out_right_left);
     }
 
     /**

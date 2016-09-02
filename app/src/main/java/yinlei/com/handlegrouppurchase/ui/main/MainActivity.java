@@ -7,12 +7,12 @@ import android.widget.TextView;
 
 import yinlei.com.handlegrouppurchase.R;
 import yinlei.com.handlegrouppurchase.ui.around.AroundFragment;
-import yinlei.com.handlegrouppurchase.ui.base.BaseActivity;
 import yinlei.com.handlegrouppurchase.ui.mainfragment.MainFragment;
 import yinlei.com.handlegrouppurchase.ui.mine.MineFragment;
 import yinlei.com.handlegrouppurchase.ui.more.MoreFragment;
+import yinlei.com.handlegrouppurchase.widget.swipebackfragment.SwipeBackActivity;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends SwipeBackActivity {
 
     //fragment
     private Class[] fragments = new Class[]{
