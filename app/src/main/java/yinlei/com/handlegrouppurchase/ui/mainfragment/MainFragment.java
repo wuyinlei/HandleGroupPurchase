@@ -41,6 +41,7 @@ import yinlei.com.handlegrouppurchase.common.Global;
 import yinlei.com.handlegrouppurchase.constant.MyConstant;
 import yinlei.com.handlegrouppurchase.http.HttpListener;
 import yinlei.com.handlegrouppurchase.listener.MyPagerListner;
+import yinlei.com.handlegrouppurchase.ui.DetailActivity;
 import yinlei.com.handlegrouppurchase.ui.category.CategoryActivity;
 import yinlei.com.handlegrouppurchase.ui.location.LocationActivity;
 import yinlei.com.handlegrouppurchase.ui.search.SearchActivity;
@@ -322,6 +323,15 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
             mGoodsAdapter = new GoodsAdapter(getActivity(), mGoodlistBeen);
             // mGoodsAdapter.notify();
             mMyListView.setAdapter(mGoodsAdapter);
+            mMyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    String goods_id = mGoodlistBeen.get(i - 2).getGoods_id();
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("goods_id", goods_id);
+                    startActivity(intent);
+                }
+            });
         }
     };
 

@@ -2,6 +2,7 @@ package yinlei.com.handlegrouppurchase.common;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.yolanda.nohttp.NoHttp;
 
 /**
@@ -19,5 +20,9 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         NoHttp.initialize(this);
+
+        //Fresco图片加载框架初始化
+        Fresco.initialize(this);
+
     }
 }

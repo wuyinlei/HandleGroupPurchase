@@ -1,2 +1,2 @@
-include ':app', ':nohttp', ':cniaotuan', ':javaapkcom仿大众点评20151019'
+include ':app', ':nohttp'
 
