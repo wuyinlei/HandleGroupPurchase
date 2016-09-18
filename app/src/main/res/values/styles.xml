@@ -18,4 +18,9 @@
         <attr name="gapWidth" format="float"/>
     </declare-styleable>
 
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/still</item>
+        <item name="android:windowExitAnimation">@anim/still</item>
+    </style>
+
 </resources>

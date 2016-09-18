@@ -1,2 +1,2 @@
-include ':app', ':nohttp'
+include ':app', ':nohttp', ':libzxinglibrary'
 

@@ -3,6 +3,7 @@ package yinlei.com.handlegrouppurchase.common;
 import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.yolanda.nohttp.NoHttp;
 
 /**
@@ -23,6 +24,6 @@ public class MyApplication extends Application{
 
         //Fresco图片加载框架初始化
         Fresco.initialize(this);
-
+        ZXingLibrary.initDisplayOpinion(this);
     }
 }

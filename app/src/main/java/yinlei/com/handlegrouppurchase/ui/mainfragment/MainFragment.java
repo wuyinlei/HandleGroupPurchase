@@ -25,6 +25,8 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.yolanda.nohttp.rest.Response;
 
 import java.util.ArrayList;
@@ -120,6 +122,10 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
 
     private View mInflate;
     private MyPagerAdapter mMyPagerAdapter = new MyPagerAdapter(mViews);
+    /**
+     * 扫描跳转Activity RequestCode
+     */
+    public static final int REQUEST_CODE = 111;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -266,7 +272,7 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
                 getActivity().startActivity(new Intent(getActivity(), TipActivity.class));
                 break;
             case R.id.image_scan:  //扫描
-
+                getActivity().startActivityForResult(new Intent(getActivity(), CaptureActivity.class), REQUEST_CODE);
                 break;
             case R.id.ll_1: //折扣
                 Toast.makeText(getActivity(), "点击我了", Toast.LENGTH_SHORT).show();
@@ -287,7 +293,28 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         }
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == REQUEST_CODE) {
+            //处理扫描结果（在界面上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    Toast.makeText(getContext(), "解析结果:" + result, Toast.LENGTH_LONG).show();
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(getContext(), "解析二维码失败", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
     /**
      * 猜你喜欢的数据解析
      */
@@ -326,10 +353,13 @@ public class MainFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
             mMyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    String goods_id = mGoodlistBeen.get(i - 2).getGoods_id();
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("goods_id", goods_id);
-                    startActivity(intent);
+                    if (i >= 2) {
+                        String goods_id = mGoodlistBeen.get(i - 2).getGoods_id();
+                        Intent intent = new Intent(getActivity(), DetailActivity.class);
+                        intent.putExtra("goods_id", goods_id);
+                        Toast.makeText(getContext(), "i:" + i, Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                    }
                 }
             });
         }

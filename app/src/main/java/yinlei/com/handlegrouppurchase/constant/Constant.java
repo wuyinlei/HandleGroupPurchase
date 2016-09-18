@@ -16,4 +16,10 @@ public class Constant {
     /**猜你喜欢**/
    public static String spRecommendURL = baseUrl + "spRecommend.txt";
 
+
+    /**猜你喜欢**/
+    public static String spRecommendURL_NEW = baseUrl + "spRecommend_new.txt";
+
+    /**热门电影**/
+   public static String filmHotUrl = baseUrl + "filmHot_refresh.txt";
 }

@@ -34,7 +34,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_list_pic"/>
 
-                <ImageView
+                <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_icon2"
                     android:layout_width="@dimen/list_image_width"
                     android:layout_height="@dimen/list_image_heigh"

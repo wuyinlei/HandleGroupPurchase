@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "yinlei.com.handlegrouppurchase"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -40,4 +40,6 @@ dependencies {
     compile 'com.yolanda.nohttp:nohttp:1.0.5'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.facebook.fresco:fresco:0.13.0'
+
+    compile 'cn.yipianfengye.android:zxing-library:1.9'
 }
