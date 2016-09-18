@@ -5,18 +5,8 @@ import android.util.AttributeSet;
 import android.widget.ScrollView;
 
 /**
- * Created by hongkl on 16/8/30.
  */
 public class ObservableScrollView extends ScrollView {
-
-    private ScrollViewListener scrollViewListener = null;
-
-    public interface ScrollViewListener{
-        void onScrollChanged(ObservableScrollView scrollView, int x, int y,
-                             int oldx, int oldy);
-    }
-
-
     public ObservableScrollView(Context context) {
         super(context);
     }
@@ -29,18 +19,35 @@ public class ObservableScrollView extends ScrollView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setScrollViewListener(ScrollViewListener scrollViewListener){
-        this.scrollViewListener = scrollViewListener;
-
+    /**
+     * 滑动接口回调
+     */
+    public interface ScrollViewLinstener {
+        void onScrollViewScrollChanged(int x, int y, int oldl, int oldy);
     }
 
+    private ScrollViewLinstener mLinstener;
 
+    /**
+     * 对外提供设置监听的方法
+     */
+    public void setLinstener(ScrollViewLinstener linstener) {
+        mLinstener = linstener;
+    }
+
+    /**
+     * 重写滑动变化的函数
+     *
+     * @param l    Current horizontal scroll origin.
+     * @param t    Current vertical scroll origin.
+     * @param oldl Previous horizontal scroll origin.
+     * @param oldt Previous vertical scroll origin.
+     */
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        if (scrollViewListener != null){
-            scrollViewListener.onScrollChanged(this,l,t,oldl,oldt);
+        if (mLinstener != null) {
+            mLinstener.onScrollViewScrollChanged(l, t, oldl, oldt);
         }
-
     }
 }

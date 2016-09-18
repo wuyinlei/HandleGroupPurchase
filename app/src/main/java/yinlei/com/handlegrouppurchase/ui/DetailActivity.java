@@ -30,7 +30,7 @@ import yinlei.com.handlegrouppurchase.http.CallServer;
 import yinlei.com.handlegrouppurchase.http.HttpListener;
 import yinlei.com.handlegrouppurchase.widget.ObservableScrollView;
 
-public class DetailActivity extends AppCompatActivity implements HttpListener<String>,ObservableScrollView.ScrollViewListener {
+public class DetailActivity extends AppCompatActivity implements HttpListener<String>,ObservableScrollView.ScrollViewLinstener {
 
     @Bind(R.id.iv_detail)
     SimpleDraweeView mIvDetail;
@@ -103,7 +103,7 @@ public class DetailActivity extends AppCompatActivity implements HttpListener<St
 
                 mImageHeight = mIvDetail.getHeight();
 
-                mScrollView.setScrollViewListener(DetailActivity.this);
+                mScrollView.setLinstener(DetailActivity.this);
             }
         });
 
@@ -142,8 +142,9 @@ public class DetailActivity extends AppCompatActivity implements HttpListener<St
     }
 
 
+
     @Override
-    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+    public void onScrollViewScrollChanged(int x, int y, int oldl, int oldy) {
         if (y <= 0) {
             mTvTitlebar.setVisibility(View.GONE);
             mLayoutTitle.setBackgroundColor(Color.argb(0, 0, 0, 0));
@@ -157,8 +158,8 @@ public class DetailActivity extends AppCompatActivity implements HttpListener<St
         } else {
             mTvTitlebar.setVisibility(View.VISIBLE);
             mTvTitlebar.setText(mDetailInfo.getResult().getProduct());
-            mTvTitlebar.setTextColor(Color.argb(0, 0, 0, 0));
-            mLayoutTitle.setBackgroundColor(Color.argb(255, 255, 255, 255));
+            mTvTitlebar.setTextColor(Color.argb((int) 255, 0, 0, 0));
+            mLayoutTitle.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
         }
     }
 }
