@@ -59,8 +59,6 @@ import yinlei.com.handlegrouppurchase.widget.swipebackfragment.SwipeBackFragment
 public class AroundFragment extends SwipeBackFragment implements HttpListener<String> {
 
 
-
-
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.supplier_list_title_tv)
