@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import cn.bmob.v3.update.BmobUpdateAgent;
 import yinlei.com.handlegrouppurchase.R;
 import yinlei.com.handlegrouppurchase.ui.guide.GuideActivity;
 import yinlei.com.handlegrouppurchase.ui.main.MainActivity;
@@ -26,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        BmobUpdateAgent.update(this);
         View target = findViewById(R.id.rl);
 
         ObjectAnimator animator = ObjectAnimator.ofFloat(target,"alpha",0.0f,1.0f);

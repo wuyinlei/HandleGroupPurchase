@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "yinlei.com.handlegrouppurchase"
@@ -38,8 +39,17 @@ dependencies {
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.yolanda.nohttp:nohttp:1.0.5'
-    compile 'com.google.code.gson:gson:2.7'
+   // compile 'com.google.code.gson:gson:2.7'
     compile 'com.facebook.fresco:fresco:0.13.0'
-
     compile 'cn.yipianfengye.android:zxing-library:1.9'
+    //以下SDK开发者请根据需要自行选择
+    //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
+    //3.5.0：请务必查看下面注释[1]
+    compile 'cn.bmob.android:bmob-sdk:3.5.0'
+    //bmob-sms ：Bmob单独为短信服务提供的包
+    //compile 'cn.bmob.android:bmob-sms:1.0.1'
+    //个推的依赖包
+    //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
+    compile 'cn.bmob.android:http-legacy:1.0'
+   // compile files('libs/BmobSDK_3.5.1_20160719.jar')
 }

@@ -6,6 +6,9 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.yolanda.nohttp.NoHttp;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.update.BmobUpdateAgent;
+
 /**
  * 在此写用途
  *
@@ -17,6 +20,8 @@ import com.yolanda.nohttp.NoHttp;
 
 public class MyApplication extends Application{
 
+    private boolean flag = true;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,5 +30,14 @@ public class MyApplication extends Application{
         //Fresco图片加载框架初始化
         Fresco.initialize(this);
         ZXingLibrary.initDisplayOpinion(this);
+
+
+        //bmob的初始化
+        Bmob.initialize(this, "2d2003b367611282feeb0533deb70120");
+
+        if (flag == true) {
+            flag = false;
+            BmobUpdateAgent.initAppVersion();
+        }
     }
 }

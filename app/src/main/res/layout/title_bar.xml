@@ -118,7 +118,7 @@
         android:visibility="gone"/>
 
     <LinearLayout
-        android:id="@id/inputLL"
+        android:id="@+id/inputLL"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -178,7 +178,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@id/rl_msg_num"
+        android:id="@+id/rl_msg_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -193,7 +193,7 @@
             android:src="@mipmap/bg_message_no"/>
 
         <TextView
-            android:id="@id/news_num"
+            android:id="@+id/news_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

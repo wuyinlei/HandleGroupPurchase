@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,10 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.update.BmobUpdateAgent;
 import yinlei.com.handlegrouppurchase.R;
 import yinlei.com.handlegrouppurchase.utils.AppUtils;
 import yinlei.com.handlegrouppurchase.utils.DataCleanManager;
-import yinlei.com.handlegrouppurchase.widget.swipebackfragment.SwipeBackFragment;
 
 /**
  * 更多界面
@@ -30,7 +31,7 @@ import yinlei.com.handlegrouppurchase.widget.swipebackfragment.SwipeBackFragment
  * @date: 2016-08-24 21:04
  */
 
-public class MoreFragment extends SwipeBackFragment {
+public class MoreFragment extends Fragment {
 
     @Bind(R.id.iv_wifi_switch)
     CheckBox mIvWifiSwitch;
@@ -79,8 +80,8 @@ public class MoreFragment extends SwipeBackFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_more, container, false);
-        ButterKnife.bind(this, attachToSwipeBack(view));
-        return attachToSwipeBack(view);
+        ButterKnife.bind(this,view);
+        return view;
     }
 
     @Override
@@ -109,6 +110,10 @@ public class MoreFragment extends SwipeBackFragment {
             case R.id.good_comment_layout:
                 String packageName = AppUtils.getAppInfo(getContext()).getPackageName();
                 goToMarket(packageName);
+                break;
+
+            case R.id.rl_softvare_update:
+                BmobUpdateAgent.forceUpdate(getActivity());
                 break;
         }
     }
